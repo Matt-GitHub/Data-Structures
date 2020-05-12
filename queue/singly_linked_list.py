@@ -9,6 +9,7 @@ class Node:
 
     # * method that allows us to get the value of the node we are on
     def get_value(self):
+        print('self value ' + str(self.value))
         return self.value
 
     # * method that allows us to get the value of the node we are pointing to
@@ -45,26 +46,37 @@ class LinkedList:
 
     def insert_end(self, new_value):
         new_node = Node(new_value)
-        # what node do we want to add the new node to?
-        # the last node in the list
-        # we can get to the last node in the list by traversing it
-        current = self.head_node
-        while current.get_next_node() is not None:
-            current = current.get_next_node()
-            # we're at the end of the linked list
-        current.set_next_node(new_node)
+        if self.head_node is None:
+            self.head_node = new_node
+        else:
+            # what node do we want to add the new node to?
+            # the last node in the list
+            # we can get to the last node in the list by traversing it
+            current = self.head_node
+            while current.get_next_node() is not None:
+                current = current.get_next_node()
+                # we're at the end of the linked list
+            current.set_next_node(new_node)
 
     def delete_end(self):
+        if self.head_node is None:
+            return None
         current_node = self.get_head_node()
+        previous_node = current_node
         while current_node.get_next_node() is not None:
             previous_node = current_node
             current_node = current_node.get_next_node()
         previous_node.set_next_node(None)
+        return current_node.value
 
     def delete_head(self):
-        next_node = self.head_node.get_next_node()
-        del self.head_node
-        self.head_node = next_node
+        if self.head_node is None:
+            return 'were hitting this one'
+        deleted = self.head_node.get_value()
+        # print('deleted ' + deleted)
+        self.head_node = self.head_node.get_next_node()
+        # print('new head node ', self.head_node.value)
+        return deleted
 
     def print_list(self):
         current_node = self.get_head_node()
@@ -81,7 +93,6 @@ third.insert_end('end')
 third.delete_end()
 third.insert_end('new end')
 third.delete_head()
-
 
 # print(third.head_node.value)
 

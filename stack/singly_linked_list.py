@@ -55,16 +55,24 @@ class LinkedList:
         current.set_next_node(new_node)
 
     def delete_end(self):
+        if self.head_node is None:
+            return None
         current_node = self.get_head_node()
+        previous_node = current_node
         while current_node.get_next_node() is not None:
             previous_node = current_node
             current_node = current_node.get_next_node()
         previous_node.set_next_node(None)
+        return current_node.value
 
     def delete_head(self):
-        next_node = self.head_node.get_next_node()
-        del self.head_node
-        self.head_node = next_node
+
+        deleted = self.head_node.get_value()
+        # print('deleted ' + deleted)
+        self.head_node = self.head_node.get_next_node()
+
+        # print('new head node ', self.head_node.value)
+        return deleted
 
     def print_list(self):
         current_node = self.get_head_node()
@@ -81,7 +89,6 @@ third.insert_end('end')
 third.delete_end()
 third.insert_end('new end')
 third.delete_head()
-
 
 # print(third.head_node.value)
 
